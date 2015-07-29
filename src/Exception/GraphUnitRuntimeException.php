@@ -2,4 +2,6 @@
 
 namespace GraphAware\Neo4j\GraphUnit\Exception;
 
-class GraphUnitRuntimeException extends \RuntimeException{}
+class GraphUnitRuntimeException extends \RuntimeException
+{
+}

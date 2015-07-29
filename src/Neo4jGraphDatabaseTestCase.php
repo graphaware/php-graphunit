@@ -16,13 +16,14 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     private $graphUnitDatabaseConnection;
 
     /**
-     * Creates a connection to the database with the provided settings
+     * Creates a connection to the database with the provided settings.
      *
      * @param $host
      * @param $port
      * @param null $user
      * @param null $password
      * @param bool $https
+     *
      * @return \Neoxygen\NeoClient\Client
      */
     public function createConnection($host, $port, $user = null, $password = null, $https = false)
@@ -38,7 +39,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
-     * Assert that the nodes count with the given label matches with the database content
+     * Assert that the nodes count with the given label matches with the database content.
      *
      * @param $count
      * @param $label
@@ -46,8 +47,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     public function assertNodesByLabelCount($count, $label)
     {
         $identifier = QueryHelper::queryIdentifier();
-        $label = ':' . QueryHelper::secureLabel($label);
-        $q = 'MATCH (' . $identifier . $label . ') RETURN ' . $identifier;
+        $label = ':'.QueryHelper::secureLabel($label);
+        $q = 'MATCH ('.$identifier.$label.') RETURN '.$identifier;
 
         $result = $this->getCypherResult($q);
 
@@ -57,8 +58,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     public function assertNodeWithLabelExist($label)
     {
         $identifier = QueryHelper::queryIdentifier();
-        $label = ':' . QueryHelper::secureLabel($label);
-        $q = 'MATCH (' . $identifier . ') RETURN ' . $identifier;
+        $label = ':'.QueryHelper::secureLabel($label);
+        $q = 'MATCH ('.$identifier.') RETURN '.$identifier;
         $result = $this->getCypherResult($q);
 
         $this->assertTrue($result->get($identifier) instanceof Node);
@@ -66,6 +67,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
 
     /**
      * Resets the database. Deletes all nodes and relationships.
+     *
      * @throws GraphUnitRuntimeException When the connection to the database can not be executed
      */
     public function resetDatabase()
@@ -99,6 +101,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     /**
      * @param $query
      * @param array $parameters
+     *
      * @return \Neoxygen\NeoClient\Formatter\Result
      */
     private function getCypherResult($query, array $parameters = array())

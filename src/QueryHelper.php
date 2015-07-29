@@ -2,29 +2,30 @@
 
 namespace GraphAware\Neo4j\GraphUnit;
 
-
 class QueryHelper
 {
     public static function formatPropertyQuery($key)
     {
         $k = trim($key);
 
-        return $k . ': {' . $k . '}';
+        return $k.': {'.$k.'}';
     }
 
     /**
      * @param $label
+     *
      * @return string
      */
     public static function secureLabel($label)
     {
         $l = trim((string) $label);
 
-        return '`' . $l . '`';
+        return '`'.$l.'`';
     }
 
     /**
      * @param array $labels
+     *
      * @return array
      */
     public static function secureLabels(array $labels)
