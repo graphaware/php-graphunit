@@ -2,6 +2,8 @@
 
 Neo4j Graph Database Assertion Tool.
 
+[![Build Status](https://travis-ci.org/graphaware/php-graphunit.svg?branch=master)](https://travis-ci.org/graphaware/php-graphunit)
+
 ### Usage
 
 Require the library in your dev dependencies :
