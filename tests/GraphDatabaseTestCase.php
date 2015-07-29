@@ -11,6 +11,6 @@ class GraphDatabaseTestCase extends Neo4jGraphDatabaseTestCase
      */
     public function getConnection()
     {
-        return $this->createConnection('localhost', 7474, 'neo4j', 'error');
+        return $this->createConnection('localhost', 7474, 'neo4j', 'password');
     }
 }
