@@ -1,0 +1,27 @@
+{
+    "name": "graphaware/neo4j-graphunit",
+    "description": "Graph Database Assertion Tool for Neo4j",
+    "keywords": ["neo4j", "graph", "database", "assertion", "tests", "nosql"],
+    "type": "library",
+    "require": {
+        "neoxygen/neoclient": "^3.1",
+        "phpunit/phpunit": "^4.7"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christophe Willemsen",
+            "email": "willemsen.christophe@gmail.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "GraphAware\\Neo4j\\GraphUnit\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "GraphAware\\Neo4j\\GraphUnit\\Tests\\": "tests"
+      }
+    }
+}
