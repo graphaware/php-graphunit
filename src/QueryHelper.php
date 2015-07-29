@@ -4,6 +4,10 @@ namespace GraphAware\Neo4j\GraphUnit;
 
 class QueryHelper
 {
+    const RELATIONSHIP_INCOMING = 'IN';
+
+    const RELATIONSHIP_OUTGOING = 'OUT';
+
     public static function formatPropertyQuery($key)
     {
         $k = trim($key);
@@ -36,6 +40,39 @@ class QueryHelper
         }
 
         return $l;
+    }
+
+    public static function formatMultipleLabelsForQuery(array $labels)
+    {
+        $q = '';
+        foreach ($labels as $label) {
+            $q .= ':' . self::secureLabel($label);
+        }
+
+        return $q;
+    }
+
+    public static function formatRelationshipQueryPart($type = null, $direction = null, array $properties = array())
+    {
+        switch ($direction) {
+            case self::RELATIONSHIP_INCOMING:
+                $start = '<-[';
+                $end = ']-';
+                break;
+            case self::RELATIONSHIP_OUTGOING:
+                $start = '-[';
+                $end = ']->';
+                break;
+            default:
+                $start = '-[';
+                $end = ']-';
+        }
+        $q = $start;
+        $q .= self::queryIdentifier();
+        $q .= null !== $type ? ':' . $type : '';
+        $q .= $end;
+
+        return $q;
     }
 
     /**

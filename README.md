@@ -61,6 +61,23 @@ class MyIntegrationTest extends MyAppBaseTestCase
 }
 ```
 
+## Asserting same graphs
+
+The library can assert that the actual graph in the database matches a graph you pass as a Cypher pattern, example : 
+
+```php
+
+public function testMyGraphIsGood()
+{
+	$this->assertSameGraph("(:User {name:'John'})-[:WORKS_AT]->(c:Company {name:'Acme'})");
+}
+
+// Returns true if the actual graph is identical, otherwise show errors in PHPUnit
+
+//1) GraphAware\Neo4j\GraphUnit\Tests\Integration\SimpleIntegrationTest::testAssertSame
+//Failed asserting that the expected graph is the same as the actual graph.
+```
+
 ---
 
 ### License
