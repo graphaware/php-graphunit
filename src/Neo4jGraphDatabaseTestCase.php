@@ -46,6 +46,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
+     * Prepares a database with the given Cypher.
+     *
      * @param $cypher
      */
     public function prepareDatabase($cypher)
@@ -58,6 +60,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
+     * Assert that the actual graph matches the expected graph.
+     *
      * @param $expected
      */
     public function assertSameGraph($expected)
@@ -87,6 +91,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
+     * Asserts that a Node with a given label exist.
+     *
      * @param $label
      */
     public function assertNodeWithLabelExist($label)
@@ -100,20 +106,24 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
+     * Asserts that <code>x</code> amount of nodes with a given label are present in the database.
+     *
      * @param $count
      * @param $label
      */
     public function assertNodesWithLabelCount($count, $label)
     {
         $id = QueryHelper::queryIdentifier();
-        $label = ':' . QueryHelper::secureLabel($label);
-        $q = 'MATCH (' . $id . $label . ') RETURN count(' . $id . ') as c';
+        $label = ':'.QueryHelper::secureLabel($label);
+        $q = 'MATCH ('.$id.$label.') RETURN count('.$id.') as c';
         $result = $this->getGraphUnitDatabaseConnection()->sendCypherQuery($q)->getResult();
 
         $this->assertEquals($count, $result->get($id));
     }
 
     /**
+     * Asserts that the database contains <code>count</code> of nodes.
+     *
      * @param $count
      */
     public function assertNodesCount($count)
@@ -125,9 +135,11 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     }
 
     /**
+     * Asserts that a node has a given relationship.
+     *
      * @param \Neoxygen\NeoClient\Formatter\Node $node
-     * @param null $type
-     * @param null $direction
+     * @param null|string                        $type
+     * @param null|string                        $direction
      */
     public function assertNodeHasRelationship(Node $node, $type = null, $direction = null)
     {
@@ -151,6 +163,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         );
     }
 
+    /**
+     *  Resets the database. Deletes all nodes, relationships, indexes and unique constraints.
+     */
     public function resetDatabase()
     {
         $this->emptyDatabase();
@@ -168,7 +183,6 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
                 $this->getGraphUnitDatabaseConnection()->dropIndex($label, $property);
             }
         }
-
     }
 
     /**
