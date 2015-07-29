@@ -48,8 +48,8 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     public function prepareDatabase($cypher)
     {
         $q = trim($cypher);
-        if (substr($q, 0, -(strlen($q)-6)) !== 'CREATE') {
-            $q = 'CREATE ' . $q;
+        if (substr($q, 0, -(strlen($q) - 6)) !== 'CREATE') {
+            $q = 'CREATE '.$q;
         }
         $this->getCypherResult($q);
     }
@@ -105,10 +105,10 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $direction = null !== $direction ? trim((string) $direction) : $direction;
         $identifier = QueryHelper::queryIdentifier();
 
-        $q = 'MATCH (' . $identifier . $labels . ')';
+        $q = 'MATCH ('.$identifier.$labels.')';
         $q .= QueryHelper::formatRelationshipQueryPart($type, $direction);
-        $q .= '(' . QueryHelper::queryIdentifier() . ')';
-        $q .= ' WHERE id(' . $identifier . ') = {id}';
+        $q .= '('.QueryHelper::queryIdentifier().')';
+        $q .= ' WHERE id('.$identifier.') = {id}';
         $q .= ' RETURN *';
         $p = ['id' => $nodeId];
 
@@ -118,7 +118,6 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
           null !== $result->getNodeById($nodeId)
           && $result->getNodeById($nodeId)->getSingleRelationship($type, $direction) instanceof Relationship
         );
-
     }
 
     /**

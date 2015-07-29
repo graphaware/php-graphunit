@@ -46,7 +46,7 @@ class QueryHelper
     {
         $q = '';
         foreach ($labels as $label) {
-            $q .= ':' . self::secureLabel($label);
+            $q .= ':'.self::secureLabel($label);
         }
 
         return $q;
@@ -69,7 +69,7 @@ class QueryHelper
         }
         $q = $start;
         $q .= self::queryIdentifier();
-        $q .= null !== $type ? ':' . $type : '';
+        $q .= null !== $type ? ':'.$type : '';
         $q .= $end;
 
         return $q;

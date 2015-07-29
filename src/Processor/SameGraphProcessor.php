@@ -16,7 +16,6 @@ class SameGraphProcessor
         $expectedResult = $this->getExpectedGraphResult($expectedCypherGraph, $client);
 
         return array($this->formatGraphResultAsComparableFormat($expectedResult), $this->formatGraphResultAsComparableFormat($currentGraphResult));
-
     }
 
     public function getExpectedGraphResult($cypher, Client $client)
@@ -30,7 +29,8 @@ class SameGraphProcessor
         return $expectedResult;
     }
 
-    public function formatGraphResultAsComparableFormat(Result $graph) {
+    public function formatGraphResultAsComparableFormat(Result $graph)
+    {
         $nodes = [];
         $relationships = [];
         foreach ($graph->getNodes() as $node) {
@@ -52,12 +52,12 @@ class SameGraphProcessor
     {
         $node = [
           'labels' => $node->getLabels(),
-          'properties' => $node->getProperties()
+          'properties' => $node->getProperties(),
         ];
 
         asort($node['labels']);
         ksort($node['properties']);
-        $node['sha'] = implode('_', $node['labels']) . implode('_', $node['properties']);
+        $node['sha'] = implode('_', $node['labels']).implode('_', $node['properties']);
 
         return $node;
     }
@@ -68,12 +68,11 @@ class SameGraphProcessor
             'type' => $relationship->getType(),
             'start' => $this->formatNodeAsComparableFormat($relationship->getStartNode()),
             'end' => $this->formatNodeAsComparableFormat($relationship->getEndNode()),
-            'properties' => $relationship->getProperties()
+            'properties' => $relationship->getProperties(),
         ];
         ksort($rel['properties']);
-        $rel['sha'] = $rel['type'] . implode('_', $rel['properties']) . $rel['start']['sha'] . $rel['end']['sha'];
+        $rel['sha'] = $rel['type'].implode('_', $rel['properties']).$rel['start']['sha'].$rel['end']['sha'];
 
         return $rel;
     }
-
 }
