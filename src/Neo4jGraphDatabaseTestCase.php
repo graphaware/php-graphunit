@@ -45,6 +45,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         return $client;
     }
 
+    /**
+     * @param $cypher
+     */
     public function prepareDatabase($cypher)
     {
         $q = trim($cypher);
@@ -54,6 +57,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $this->getCypherResult($q);
     }
 
+    /**
+     * @param $expected
+     */
     public function assertSameGraph($expected)
     {
         $asserter = new SameGraphProcessor();
@@ -80,6 +86,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $this->assertCount($count, $result->get($identifier));
     }
 
+    /**
+     * @param $label
+     */
     public function assertNodeWithLabelExist($label)
     {
         $identifier = QueryHelper::queryIdentifier();
@@ -90,6 +99,23 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $this->assertTrue($result->get($identifier) instanceof Node);
     }
 
+    /**
+     * @param $count
+     * @param $label
+     */
+    public function assertNodesWithLabelCount($count, $label)
+    {
+        $id = QueryHelper::queryIdentifier();
+        $label = ':' . QueryHelper::secureLabel($label);
+        $q = 'MATCH (' . $id . $label . ') RETURN count(' . $id . ') as c';
+        $result = $this->getGraphUnitDatabaseConnection()->sendCypherQuery($q)->getResult();
+
+        $this->assertEquals($count, $result->get($id));
+    }
+
+    /**
+     * @param $count
+     */
     public function assertNodesCount($count)
     {
         $q = 'MATCH (n) RETURN count(n) as c';
@@ -98,6 +124,11 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $this->assertEquals($count, $result->get('c'));
     }
 
+    /**
+     * @param \Neoxygen\NeoClient\Formatter\Node $node
+     * @param null $type
+     * @param null $direction
+     */
     public function assertNodeHasRelationship(Node $node, $type = null, $direction = null)
     {
         $nodeId = (int) $node->getId();
@@ -120,12 +151,32 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         );
     }
 
+    public function resetDatabase()
+    {
+        $this->emptyDatabase();
+        $response = $this->getGraphUnitDatabaseConnection()->getUniqueConstraints();
+        $labeledConstraints = $response->getBody();
+        foreach ($labeledConstraints as $label => $constraints) {
+            foreach ($constraints as $p) {
+                $this->getGraphUnitDatabaseConnection()->dropUniqueConstraint($label, $p);
+            }
+        }
+        $response = $this->getGraphUnitDatabaseConnection()->listIndexes();
+        $labeledIndexs = $response->getBody();
+        foreach ($labeledIndexs as $label => $indexes) {
+            foreach ($indexes as $property) {
+                $this->getGraphUnitDatabaseConnection()->dropIndex($label, $property);
+            }
+        }
+
+    }
+
     /**
-     * Resets the database. Deletes all nodes and relationships.
+     * Empty the database. Deletes all nodes and relationships.
      *
      * @throws GraphUnitRuntimeException When the connection to the database can not be executed
      */
-    public function resetDatabase()
+    public function emptyDatabase()
     {
         $q = 'MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE r,n';
         try {

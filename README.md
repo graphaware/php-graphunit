@@ -30,38 +30,91 @@ class MyAppBaseTestCase extends Neo4jGraphDatabaseTestCase
 }
 ```
 
-Your integration tests can now extend your new TestCase base class and start doing assertions on the database :
+### Assertions
+
+#### assertNodeWithLabelExist
 
 ```php
-namespace MyVendor\MyApp\Tests\Integration;
-
-class MyIntegrationTest extends MyAppBaseTestCase
-{
-	public function setUp()
-	{
-		// Available method for cleaning the db
-		$this->resetDatabase();
-	}
-		
-	public function testNodesAreCreated()
+public function testNodeWillExist()
 	{
 		$q = 'CREATE (n:TestNode)';
 		$this->getConnection()->sendCypherQuery($q);
 		
 		$this->assertNodeWithLabelExist('TestNode');
 	}
-	
-	public function testMultipleNodesAreCreated()
+```
+
+#### assertNodesWithLabelCount
+
+```php
+public function testMultipleNodesAreCreated()
 	{
 		$q = 'CREATE (n:TestNode), (n2:TestNode);
 		$this->getConnection()->sendCypherQuery($q);
 		
 		$this->assertNodesWithLabelCount(2, 'TestNode');
 	}
+```
+
+#### assertNodesCount
+
+```php
+public function testMultipleNodesAreCreated()
+	{
+		$q = 'CREATE (n:TestNode), (n2:TestNode);
+		$this->getConnection()->sendCypherQuery($q);
+		
+		$this->assertNodesCount(2);
+	}
+```
+
+#### assertNodeHasRelationship
+
+```php
+public function testMultipleNodesAreCreated()
+	{
+		$q = 'CREATE (n:User {name: "john"}), (n2:User {name: "mary"})-[:WORKS_AT]->(:Company {name:"Acme"}) RETURN n2;
+		$result = $this->getConnection()->sendCypherQuery($q);
+		
+		$this->assertNodeHasRelationship($result->get('n2'), 'WORKS_AT', 'OUT');
+	}
+```
+
+### Reseting database states
+
+You can easily reset the database state (deleting all nodes, relationships, schema indexes and constraints) during your `setUp` events :
+
+```php
+public function setUp()
+{
+	$this->resetDatabase();
 }
 ```
 
-## Asserting same graphs
+If you don't want to delete the schema indexes and constraints, just call the `emptyDatabase` method :
+
+```php
+public function setUp()
+{
+	$this->emptyDatabase();
+}
+```
+
+### Preparing database states
+
+You can just pass a Cypher pattern for preparing your database :
+
+```php
+public function setUp()
+{
+	$state = "(a:User {name:'Abed'})-[:WORKS_AT]->(:Company {name:'Vinelab'})
+	(c:User {name:'Chris'})-[:WORKS_AT]->(:Company {name:'GraphAware'})
+	(a)-[:FRIEND]->(c)";
+	$this->prepareDatabase($state);
+}
+```
+
+### Asserting same graphs
 
 The library can assert that the actual graph in the database matches a graph you pass as a Cypher pattern, example : 
 
