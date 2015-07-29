@@ -309,16 +309,16 @@
         },
         {
             "name": "neoxygen/neoclient",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neoxygen/neo4j-neoclient.git",
-                "reference": "31f25be3acfaeb7a9455107efe398d5b05a0e756"
+                "reference": "2b679bf71d14d87f8428312e246100061cdcdb55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/31f25be3acfaeb7a9455107efe398d5b05a0e756",
-                "reference": "31f25be3acfaeb7a9455107efe398d5b05a0e756",
+                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/2b679bf71d14d87f8428312e246100061cdcdb55",
+                "reference": "2b679bf71d14d87f8428312e246100061cdcdb55",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +366,7 @@
                 "high-availibility",
                 "neo4j"
             ],
-            "time": "2015-07-26 11:02:19"
+            "time": "2015-07-29 17:39:24"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
