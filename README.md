@@ -137,6 +137,14 @@ public function testMyGraphIsGood()
 
 This library is released under the MIT License, please refer to the `LICENSE` file shipped with the library.
 
+### Author
+
+Christophe Willemsen
+
+Github: https://github.com/ikwattro
+
+Twitter: https://twitter.com/ikwattro
+
 ### Credits
 
 GraphAware Limited
