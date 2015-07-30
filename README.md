@@ -23,7 +23,7 @@ namespace MyVendor\MyApp\Tests;
 
 use GraphAware\Neo4j\GraphUnit\Neo4jGraphDatabaseTestCase;
 
-class MyAppBaseTestCase extends Neo4jGraphDatabaseTestCase
+abstract class MyAppBaseTestCase extends Neo4jGraphDatabaseTestCase
 {
 	public function getConnection()
 	{
