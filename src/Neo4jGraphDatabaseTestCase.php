@@ -99,7 +99,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     {
         $identifier = QueryHelper::queryIdentifier();
         $label = ':'.QueryHelper::secureLabel($label);
-        $q = 'MATCH ('.$identifier.') RETURN '.$identifier;
+        $q = 'MATCH ('.$identifier.$label.') RETURN '.$identifier;
         $result = $this->getCypherResult($q);
 
         $this->assertTrue($result->get($identifier) instanceof Node);
