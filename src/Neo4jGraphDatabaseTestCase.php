@@ -40,6 +40,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
           ->addConnection('default', $scheme, $host, (int) $port, true, $user, $password)
           ->setDefaultTimeout(10)
           ->setAutoFormatResponse(true)
+          //->enableNewFormattingService()
           ->build();
 
         return $client;
