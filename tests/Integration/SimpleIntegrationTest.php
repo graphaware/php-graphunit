@@ -38,8 +38,8 @@ class SimpleIntegrationTest extends GraphDatabaseTestCase
     public function testRelationshipExist()
     {
         $q = 'CREATE (n:SuperNode)-[:OWNED_BY]->(u:SuperUser) RETURN u';
-        $result = $this->getConnection()->sendCypherQuery($q)->getResult();
-        $node = $result->get('u');
+        $result = $this->getConnection()->sendCypherQuery($q)->getSingleResult();
+        $node = $result->get('u', true);
 
         $this->assertNodeHasRelationship($node, 'OWNED_BY');
     }

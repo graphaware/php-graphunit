@@ -3,16 +3,16 @@
 namespace GraphAware\Neo4j\GraphUnit\Processor;
 
 use Neoxygen\NeoClient\Client;
-use Neoxygen\NeoClient\Formatter\Node;
-use Neoxygen\NeoClient\Formatter\Relationship;
-use Neoxygen\NeoClient\Formatter\Result;
+use GraphAware\NeoClient\Formatter\Graph\Node;
+use GraphAware\NeoClient\Formatter\Graph\Relationship;
+use GraphAware\NeoClient\Formatter\Result;
 
 class SameGraphProcessor
 {
     public function assertSameGraph($expectedCypherGraph, Client $client)
     {
         $currentGraphQuery = 'MATCH (n) OPTIONAL MATCH (n)-[r]-() RETURN n,r';
-        $currentGraphResult = $client->sendCypherQuery($currentGraphQuery)->getResult();
+        $currentGraphResult = $client->sendCypherQuery($currentGraphQuery)->getSingleResult();
         $expectedResult = $this->getExpectedGraphResult($expectedCypherGraph, $client);
 
         return array($this->formatGraphResultAsComparableFormat($expectedResult), $this->formatGraphResultAsComparableFormat($currentGraphResult));

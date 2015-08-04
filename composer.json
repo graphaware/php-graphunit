@@ -4,7 +4,8 @@
     "keywords": ["neo4j", "graph", "database", "assertion", "tests", "nosql"],
     "type": "library",
     "require": {
-        "neoxygen/neoclient": "^3.1",
+        "neoxygen/neoclient": "^3.3",
+        "graphaware/neo4j-response-formatter": "^1.0",
         "phpunit/phpunit": "^4.7"
     },
     "license": "MIT",

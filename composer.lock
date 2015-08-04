@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e25d23e7b70b117b557cf7cb6e9fcb94",
+    "hash": "eb1a37c2980819adc1faac9be904519f",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -62,17 +62,11 @@
         },
         {
             "name": "graphaware/neo4j-response-formatter",
-            "version": "1.1.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/graphaware/neo4j-php-response-formatter.git",
-                "reference": "d442bdda519b14b7bcf4df863dd69cf646ae8175"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/graphaware/neo4j-php-response-formatter/zipball/d442bdda519b14b7bcf4df863dd69cf646ae8175",
-                "reference": "d442bdda519b14b7bcf4df863dd69cf646ae8175",
-                "shasum": ""
+                "url": "/Users/cw/dev/neoxygen/response-formatter",
+                "reference": "1cc1ac1bc1f573aeb231ee424c55fae137beea47"
             },
             "require": {
                 "psr/http-message": "^1.0"
@@ -88,7 +82,11 @@
                     "GraphAware\\NeoClient\\Formatter\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "GraphAware\\NeoClient\\Formatter\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -99,7 +97,7 @@
                 }
             ],
             "description": "Response Formatter for NeoClient",
-            "time": "2015-08-04 19:47:32"
+            "time": "2015-08-04 22:19:01"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -350,17 +348,11 @@
         },
         {
             "name": "neoxygen/neoclient",
-            "version": "3.3.6",
+            "version": "3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neoxygen/neo4j-neoclient.git",
-                "reference": "98cf98dbeacbdff61de2201c08fabbdb06feca00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/98cf98dbeacbdff61de2201c08fabbdb06feca00",
-                "reference": "98cf98dbeacbdff61de2201c08fabbdb06feca00",
-                "shasum": ""
+                "reference": "61b43b8a869d6d04220f16d4eaa82bd58f2bec21"
             },
             "require": {
                 "graphaware/neo4j-response-formatter": "^1.0",
@@ -390,7 +382,11 @@
                     "Neoxygen\\NeoClient\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Neoxygen\\NeoClient\\Tests\\": "tests/Neoxygen/NeoClient/Tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -409,7 +405,7 @@
                 "high-availibility",
                 "neo4j"
             ],
-            "time": "2015-08-04 20:21:31"
+            "time": "2015-08-04 22:05:55"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

@@ -8,8 +8,8 @@ use GraphAware\Neo4j\GraphUnit\Exception\GraphUnitRuntimeException;
 use Neoxygen\NeoClient\Client;
 use Neoxygen\NeoClient\ClientBuilder;
 use Neoxygen\NeoClient\Exception\HttpException;
-use Neoxygen\NeoClient\Formatter\Node;
-use Neoxygen\NeoClient\Formatter\Relationship;
+use GraphAware\NeoClient\Formatter\Graph\Node;
+use GraphAware\NeoClient\Formatter\Graph\Relationship;
 
 abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase implements GraphDatabaseServiceInterface
 {
@@ -40,7 +40,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
           ->addConnection('default', $scheme, $host, (int) $port, true, $user, $password)
           ->setDefaultTimeout(10)
           ->setAutoFormatResponse(true)
-          //->enableNewFormattingService()
+          ->enableNewFormattingService()
           ->build();
 
         return $client;
@@ -86,7 +86,7 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $label = ':'.QueryHelper::secureLabel($label);
         $q = 'MATCH ('.$identifier.$label.') RETURN '.$identifier;
 
-        $result = $this->getCypherResult($q);
+        $result = $this->getCypherResult($q)->getSingleResult();
 
         $this->assertCount($count, $result->get($identifier));
     }
@@ -101,9 +101,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $identifier = QueryHelper::queryIdentifier();
         $label = ':'.QueryHelper::secureLabel($label);
         $q = 'MATCH ('.$identifier.$label.') RETURN '.$identifier;
-        $result = $this->getCypherResult($q);
+        $result = $this->getCypherResult($q)->getSingleResult();
 
-        $this->assertTrue($result->get($identifier) instanceof Node);
+        $this->assertTrue($result->get($identifier, true) instanceof Node);
     }
 
     /**
@@ -130,9 +130,9 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
     public function assertNodesCount($count)
     {
         $q = 'MATCH (n) RETURN count(n) as c';
-        $result = $this->getCypherResult($q);
+        $result = $this->getCypherResult($q)->getSingleResult();
 
-        $this->assertEquals($count, $result->get('c'));
+        $this->assertEquals($count, $result->get('c', true));
     }
 
     /**
@@ -156,11 +156,11 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
         $q .= ' RETURN *';
         $p = ['id' => $nodeId];
 
-        $result = $this->getCypherResult($q, $p);
+        $result = $this->getCypherResult($q, $p)->getSingleResult();
 
         $this->assertTrue(
           null !== $result->getNodeById($nodeId)
-          && $result->getNodeById($nodeId)->getSingleRelationship($type, $direction) instanceof Relationship
+          && $result->getNodeById($nodeId)->getRelationships($type, $direction)[0] instanceof Relationship
         );
     }
 
@@ -223,10 +223,10 @@ abstract class Neo4jGraphDatabaseTestCase extends \PHPUnit_Framework_TestCase im
      * @param $query
      * @param array $parameters
      *
-     * @return \Neoxygen\NeoClient\Formatter\Result
+     * @return \GraphAware\NeoClient\Formatter\Response
      */
     private function getCypherResult($query, array $parameters = array())
     {
-        return $this->getGraphUnitDatabaseConnection()->sendCypherQuery($query, $parameters)->getResult();
+        return $this->getGraphUnitDatabaseConnection()->sendCypherQuery($query, $parameters);
     }
 }
