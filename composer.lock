@@ -62,11 +62,17 @@
         },
         {
             "name": "graphaware/neo4j-response-formatter",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
-                "url": "/Users/cw/dev/neoxygen/response-formatter",
+                "url": "https://github.com/graphaware/neo4j-php-response-formatter.git",
                 "reference": "1cc1ac1bc1f573aeb231ee424c55fae137beea47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/graphaware/neo4j-php-response-formatter/zipball/1cc1ac1bc1f573aeb231ee424c55fae137beea47",
+                "reference": "1cc1ac1bc1f573aeb231ee424c55fae137beea47",
+                "shasum": ""
             },
             "require": {
                 "psr/http-message": "^1.0"
@@ -82,11 +88,7 @@
                     "GraphAware\\NeoClient\\Formatter\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "GraphAware\\NeoClient\\Formatter\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -354,6 +356,12 @@
                 "url": "https://github.com/neoxygen/neo4j-neoclient.git",
                 "reference": "61b43b8a869d6d04220f16d4eaa82bd58f2bec21"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/61b43b8a869d6d04220f16d4eaa82bd58f2bec21",
+                "reference": "61b43b8a869d6d04220f16d4eaa82bd58f2bec21",
+                "shasum": ""
+            },
             "require": {
                 "graphaware/neo4j-response-formatter": "^1.0",
                 "guzzlehttp/guzzle": "^6.0",
@@ -382,11 +390,7 @@
                     "Neoxygen\\NeoClient\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Neoxygen\\NeoClient\\Tests\\": "tests/Neoxygen/NeoClient/Tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
